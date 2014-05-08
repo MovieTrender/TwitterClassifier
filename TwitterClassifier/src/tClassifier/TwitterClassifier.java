@@ -71,7 +71,7 @@ public class TwitterClassifier {
 
 		
 		//Increasing Heap size
-		//conf.set("mapreduce.map.java.opts", "-Xmx3072m");
+		conf.set("mapreduce.map.java.opts", "-Xmx5072m");
 		//conf.set("mapreduce.task.io.sort.mb", "2024");
 		conf.set("mapreduce.map.memory.mb","5072");
 		//conf.set("mapreduce.job.jvm.numtasks", "1");
