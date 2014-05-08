@@ -61,11 +61,11 @@ public class TwitterClassifier {
 			System.out.println("Arguments: [model] [dictionnary] [document frequency] [tweet file] [output directory]");
 			return;
 		}
-		String modelPath = args[1];
-		String dictionaryPath = args[2];
-		String documentFrequencyPath = args[3];
-		String tweetsPath = args[4];
-		String outputPath = args[5];
+		String modelPath = args[0];
+		String dictionaryPath = args[1];
+		String documentFrequencyPath = args[2];
+		String tweetsPath = args[3];
+		String outputPath = args[4];
 
 		Configuration conf = new Configuration();
 
