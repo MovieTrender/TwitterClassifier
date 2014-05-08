@@ -73,11 +73,11 @@ public class TwitterClassifier {
 		conf.setStrings(Classifier.DICTIONARY_PATH_CONF, dictionaryPath);
 		conf.setStrings(Classifier.DOCUMENT_FREQUENCY_PATH_CONF, documentFrequencyPath);
 
-
+		// do not create a new jvm for each task
+		conf.setLong("mapred.job.reuse.jvm.num.tasks", -1);
 		
 		//Increasing Heap size
-		conf.set("mapred.child.java.opts", "-Xmx8192m");
-		conf.set("mapred.tasktracker.map.tasks.maximum", "1");
+		conf.set("mapred.child.java.opts", "-Xmx4096m");
 
 		Job job = new Job(conf, "TwitterClassifier");
 
