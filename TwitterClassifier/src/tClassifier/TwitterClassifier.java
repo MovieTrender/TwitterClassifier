@@ -16,7 +16,7 @@ import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
 public class TwitterClassifier {
 
-	public static class ClassifierMap extends Mapper<LongWritable, Text, Text, IntWritable> {
+	public static class ClassifierMap extends Mapper<Text, Text, Text, IntWritable> {
 		private final static Text outputKey = new Text();
 		private final static IntWritable outputValue = new IntWritable();
 		private static Classifier classifier;
@@ -86,6 +86,8 @@ public class TwitterClassifier {
 		Job job = new Job(conf, "TwitterClassifier");
 
 		job.setJarByClass(TwitterClassifier.class);
+		
+		
 		job.setOutputKeyClass(Text.class);
 		job.setOutputValueClass(IntWritable.class);
 		job.setMapperClass(ClassifierMap.class);
