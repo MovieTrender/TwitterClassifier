@@ -79,7 +79,8 @@ public class TwitterClassifier {
 		conf.set("mapreduce.map.java.opts", "-Xmx2048m");
 		conf.set("apreduce.task.io.sort.mb", "1024");
 		conf.set("mapreduce.map.memory.mb","1024");
-		conf.set("mapred.tasktracker.map.tasks.maximum", "1");
+		conf.set("mapreduce.job.jvm.numtasks", "1");
+		
 
 		Job job = new Job(conf, "TwitterClassifier");
 
