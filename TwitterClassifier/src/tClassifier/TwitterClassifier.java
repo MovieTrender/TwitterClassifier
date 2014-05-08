@@ -76,8 +76,9 @@ public class TwitterClassifier {
 
 		
 		//Increasing Heap size
-		conf.set("mapred.child.java.opts", "-Xmx2048m");
-		conf.set("io.sort.mb", "1024");
+		conf.set("mapreduce.map.java.opts", "-Xmx2048m");
+		conf.set("apreduce.task.io.sort.mb", "1024");
+		conf.set("mapreduce.map.memory.mb","1024");
 		conf.set("mapred.tasktracker.map.tasks.maximum", "1");
 
 		Job job = new Job(conf, "TwitterClassifier");
