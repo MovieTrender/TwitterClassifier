@@ -54,7 +54,7 @@ public class Classifier {
 	}
 
 	public int classify(String text) throws IOException {
-		int documentCount = documentFrequency.get(-1).intValue();
+		int documentCount = documentFrequency.size();
 
 		Multiset<String> words = ConcurrentHashMultiset.create();
 
