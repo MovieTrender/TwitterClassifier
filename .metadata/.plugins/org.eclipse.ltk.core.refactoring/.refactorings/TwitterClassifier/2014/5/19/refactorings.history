@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move 2 elements to &apos;TwitterClassifier/src/tClassifier&apos;&#x0A;- Original project: &apos;TwitterClassifier&apos;&#x0A;- Destination element: &apos;TwitterClassifier/src/tClassifier&apos;&#x0A;- Original elements:&#x0A;     TwitterClassifier.java&#x0A;     Classifier.java&#x0A;- Update references to refactored element" description="Move compilation units" destination="/src&lt;tClassifier" element1="/src&lt;{TwitterClassifier.java" element2="/src&lt;{Classifier.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.move" policy="org.eclipse.jdt.ui.moveResources" qualified="false" references="true" stamp="1399570299863" units="2" version="1.0"/>
+</session>
