@@ -63,6 +63,7 @@ public class Classifier {
 		CharTermAttribute termAtt = ts.addAttribute(CharTermAttribute.class);
 		ts.reset();
 		int wordCount = 0;
+		
 		while (ts.incrementToken()) {
 			if (termAtt.length() > 0) {
 				String word = ts.getAttribute(CharTermAttribute.class).toString();
@@ -102,7 +103,10 @@ public class Classifier {
 				bestCategoryId = categoryId;
 			}
 		}
-
+		
+		if (bestCategoryId == -1)
+			return 9;
+		
 		return bestCategoryId;
 	}
 
