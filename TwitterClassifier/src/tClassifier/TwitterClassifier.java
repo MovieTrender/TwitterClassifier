@@ -76,8 +76,9 @@ public class TwitterClassifier {
 		// do not create a new jvm for each task
 		conf.setLong("mapred.job.reuse.jvm.num.tasks", -1);
 
-		Job job = new Job(conf, "classifier");
+		Job job = new Job(conf, "TwitterClassifier");
 
+		job.setJarByClass(TwitterClassifier.class);
 		job.setOutputKeyClass(Text.class);
 		job.setOutputValueClass(IntWritable.class);
 		job.setMapperClass(ClassifierMap.class);
