@@ -5,7 +5,6 @@ import java.io.IOException;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
-import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
@@ -38,14 +37,10 @@ public class TwitterClassifier {
 
 
 
-		public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
-			String line = value.toString();
-			String[] tokens = line.split("\t", 2);
-			if (tokens.length < 2) {
-				return;
-			}
-			String tweetId = tokens[0];
-			String tweet = tokens[1];
+		public void map(Text key, Text value, Context context) throws IOException, InterruptedException {
+			
+			String tweetId = key.toString();
+			String tweet = value.toString();
 
 			int bestCategoryId = classifier.classify(tweet);
 			outputValue.set(bestCategoryId);
@@ -76,12 +71,12 @@ public class TwitterClassifier {
 
 		
 		//Increasing Heap size
-		conf.set("mapreduce.map.java.opts", "-Xmx2048m");
-		conf.set("mapreduce.task.io.sort.mb", "1024");
-		conf.set("mapreduce.map.memory.mb","2048");
+		//conf.set("mapreduce.map.java.opts", "-Xmx2048m");
+		//conf.set("mapreduce.task.io.sort.mb", "1024");
+		//conf.set("mapreduce.map.memory.mb","2048");
 		//conf.set("mapreduce.job.jvm.numtasks", "1");
 		//conf.set("mapreduce.job.maps", "1");
-		conf.set("mapred.job.shuffle.input.buffer.percent", "0.20");
+		//conf.set("mapred.job.shuffle.input.buffer.percent", "0.20");
 		
 		Job job = new Job(conf, "TwitterClassifier");
 
