@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.Text;
+import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
@@ -15,7 +16,7 @@ import org.apache.mahout.math.VectorWritable;
 
 public class TwitterClassifier {
 
-	public static class ClassifierMap extends Mapper<Text, VectorWritable, Text, VectorWritable> {
+	public static class ClassifierMap extends Mapper<Text, VectorWritable, Text, IntWritable> {
 		
 		private static Classifier classifier;
 		
@@ -39,8 +40,9 @@ public class TwitterClassifier {
 		public void map(Text key, VectorWritable value, Context context) throws IOException, InterruptedException {
 		
 
-			VectorWritable bestCategoryId = classifier.classify(value);
-			context.write(key, bestCategoryId);
+			int bestCategoryId = classifier.classify(value);
+			IntWritable category = new IntWritable(bestCategoryId);
+			context.write(key, category);
 		
 
 		}

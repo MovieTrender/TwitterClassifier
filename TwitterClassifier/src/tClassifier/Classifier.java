@@ -2,13 +2,13 @@ package tClassifier;
 
 import java.io.IOException;
 
-
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.mahout.classifier.AbstractVectorClassifier;
 import org.apache.mahout.classifier.naivebayes.NaiveBayesModel;
 import org.apache.mahout.classifier.naivebayes.StandardNaiveBayesClassifier;
 import org.apache.mahout.math.Vector;
+import org.apache.mahout.math.Vector.Element;
 import org.apache.mahout.math.VectorWritable;
 
 public class Classifier {
@@ -27,12 +27,25 @@ public class Classifier {
 	
 	}
 
-	public VectorWritable classify(VectorWritable text) throws IOException {
+	public int classify(VectorWritable text) throws IOException {
 		
 		
 		 Vector result = classifier.classifyFull(text.get());
-	     VectorWritable cl =new VectorWritable(result);
-	     return cl;
+	     
+	     double bestScore = -Double.MAX_VALUE;
+	     int bestCategoryId = -1;
+	        for(Element element: result) {
+	            int categoryId = element.index();
+	            double score = element.get();
+	            if (score > bestScore) {
+	                bestScore = score;
+	                bestCategoryId = categoryId;
+	            }
+	        }
+	 
+	     return bestCategoryId;
+	     
+
 		
 	}
 
