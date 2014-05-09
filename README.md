@@ -20,6 +20,10 @@ Reads the Sequence file with all the tweets and run a MapReduce in which for eac
 - Document Frequency
 - Dicctionary
 
+###References
+
+Parts of the code used in this process were taken from [Chimpler](https://github.com/fredang/mahout-naive-bayes-example2 "Chimpler") and addapted for MovieTrender project.
+
 
 
 
