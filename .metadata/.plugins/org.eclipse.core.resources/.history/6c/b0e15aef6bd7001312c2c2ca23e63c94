@@ -6,10 +6,13 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.mahout.classifier.AbstractVectorClassifier;
 import org.apache.mahout.classifier.naivebayes.NaiveBayesModel;
 import org.apache.mahout.classifier.naivebayes.StandardNaiveBayesClassifier;
+import org.apache.mahout.common.Pair;
+import org.apache.mahout.common.iterator.sequencefile.SequenceFileIterable;
 import org.apache.mahout.math.RandomAccessSparseVector;
 import org.apache.mahout.math.Vector;
 import org.apache.mahout.math.Vector.Element;
@@ -135,7 +138,7 @@ public class Classifier {
 	    private static Map<Integer, Long> readDocumentFrequency(Configuration conf, Path documentFrequencyPath) throws IOException {
 	        Map<Integer, Long> documentFrequency = new HashMap<Integer, Long>(); 
 	        
-
+	        @SuppressWarnings("deprecation")
 			SequenceFile.Reader sfr =  new SequenceFile.Reader(conf,Reader.file(documentFrequencyPath));
 	        
 	        IntWritable key=new IntWritable();

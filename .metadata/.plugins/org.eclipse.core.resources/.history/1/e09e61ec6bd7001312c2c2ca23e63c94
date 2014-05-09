@@ -6,10 +6,13 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.mahout.classifier.AbstractVectorClassifier;
 import org.apache.mahout.classifier.naivebayes.NaiveBayesModel;
 import org.apache.mahout.classifier.naivebayes.StandardNaiveBayesClassifier;
+import org.apache.mahout.common.Pair;
+import org.apache.mahout.common.iterator.sequencefile.SequenceFileIterable;
 import org.apache.mahout.math.RandomAccessSparseVector;
 import org.apache.mahout.math.Vector;
 import org.apache.mahout.math.Vector.Element;
@@ -17,7 +20,6 @@ import org.apache.mahout.vectorizer.TFIDF;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.SequenceFile;
-import org.apache.hadoop.io.SequenceFile.Reader;
 import org.apache.hadoop.io.Text;
 
 
@@ -118,8 +120,8 @@ public class Classifier {
 	 private static Map<String, Integer> readDictionnary(Configuration conf, Path dictionnaryPath) throws IOException {
 	        Map<String, Integer> dictionnary = new HashMap<String, Integer>();
 	        
-	      
-			SequenceFile.Reader sfr = new SequenceFile.Reader(conf,Reader.file(dictionnaryPath));
+	        @SuppressWarnings("deprecation")
+			SequenceFile.Reader sfr = new SequenceFile.Reader(FileSystem.get(conf),dictionnaryPath,conf);
 	        
 	        Text key=new Text();
 	        IntWritable value=new IntWritable();
@@ -135,8 +137,8 @@ public class Classifier {
 	    private static Map<Integer, Long> readDocumentFrequency(Configuration conf, Path documentFrequencyPath) throws IOException {
 	        Map<Integer, Long> documentFrequency = new HashMap<Integer, Long>(); 
 	        
-
-			SequenceFile.Reader sfr =  new SequenceFile.Reader(conf,Reader.file(documentFrequencyPath));
+	        @SuppressWarnings("deprecation")
+			SequenceFile.Reader sfr = new SequenceFile.Reader(FileSystem.get(conf),documentFrequencyPath,conf);
 	        
 	        IntWritable key=new IntWritable();
 	        LongWritable value=new LongWritable();
