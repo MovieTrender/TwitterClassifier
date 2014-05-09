@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="org.apache.hadoop.mapred.SequenceFileInputFormat"/>
+<fullyQualifiedTypeName name="org.apache.hadoop.mapreduce.lib.input.SequenceFileInputFormat"/>
+<fullyQualifiedTypeName name="tClassifier.TwitterClassifier.ClassifierMap"/>
+<fullyQualifiedTypeName name="org.apache.mahout.classifier.AbstractVectorClassifier"/>
+<fullyQualifiedTypeName name="org.apache.mahout.math.VectorWritable"/>
+<fullyQualifiedTypeName name="org.apache.mahout.common.iterator.sequencefile.SequenceFileDirIterable"/>
+<fullyQualifiedTypeName name="org.apache.mahout.common.iterator.sequencefile.PathType"/>
+<fullyQualifiedTypeName name="org.apache.mahout.common.iterator.sequencefile.PathFilters"/>
+<fullyQualifiedTypeName name="org.apache.mahout.math.Vector.Element"/>
+<fullyQualifiedTypeName name="java.util.Map"/>
+<fullyQualifiedTypeName name="java.util.HashMap"/>
+<fullyQualifiedTypeName name="org.apache.mahout.common.Pair"/>
+<fullyQualifiedTypeName name="org.apache.mahout.common.iterator.sequencefile.SequenceFileIterable"/>
+<fullyQualifiedTypeName name="org.apache.hadoop.io.Text"/>
+<fullyQualifiedTypeName name="com.google.common.collect.ConcurrentHashMultiset"/>
+<fullyQualifiedTypeName name="com.google.common.collect.Multiset"/>
+<fullyQualifiedTypeName name="org.apache.lucene.analysis.TokenStream"/>
+<fullyQualifiedTypeName name="org.apache.mahout.math.RandomAccessSparseVector"/>
+<fullyQualifiedTypeName name="org.apache.mahout.vectorizer.TFIDF"/>
+<fullyQualifiedTypeName name="javax.swing.text.html.HTMLDocument.Iterator"/>
+<fullyQualifiedTypeName name="org.apache.hadoop.io.SequenceFile"/>
+<fullyQualifiedTypeName name="org.apache.hadoop.fs.FileSystem"/>
+<fullyQualifiedTypeName name="org.apache.hadoop.io.SequenceFile.Reader"/>
+</qualifiedTypeNameHistroy>
