@@ -72,7 +72,7 @@ public class TwitterClassifier {
 		
 		
 		job.setOutputKeyClass(Text.class);
-		job.setOutputValueClass(IntWritable.class);
+		job.setOutputValueClass(VectorWritable.class);
 		job.setMapperClass(ClassifierMap.class);
 
 		job.setInputFormatClass(SequenceFileInputFormat.class);
