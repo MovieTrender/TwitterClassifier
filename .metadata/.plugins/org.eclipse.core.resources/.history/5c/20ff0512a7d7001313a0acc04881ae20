@@ -127,7 +127,7 @@ public class TwitterClassifier {
 		job.setJarByClass(TwitterClassifier.class);
 		
 		
-		job.setOutputKeyClass(Text.class);
+		job.setOutputKeyClass(IntWritable.class);
 		job.setOutputValueClass(IntWritable.class);
 		job.setMapperClass(ClassifierMap.class);
 
