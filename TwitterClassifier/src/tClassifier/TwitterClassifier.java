@@ -28,7 +28,7 @@ import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
  */
 public class TwitterClassifier {
 
-	public static class ClassifierMap extends Mapper<Text, Text, Text, IntWritable> {
+	public static class ClassifierMap extends Mapper<IntWritable, Text, IntWritable, IntWritable> {
 		
 		private static Classifier classifier;
 		
@@ -49,7 +49,7 @@ public class TwitterClassifier {
 
 		 
 
-		public void map(Text key, Text value, Context context) throws IOException, InterruptedException {
+		public void map(IntWritable key, Text value, Context context) throws IOException, InterruptedException {
 		
 
 			int bestCategoryId = classifier.classify(value);
@@ -85,7 +85,7 @@ public class TwitterClassifier {
 		job.setJarByClass(TwitterClassifier.class);
 		
 		
-		job.setOutputKeyClass(Text.class);
+		job.setOutputKeyClass(IntWritable.class);
 		job.setOutputValueClass(IntWritable.class);
 		job.setMapperClass(ClassifierMap.class);
 
