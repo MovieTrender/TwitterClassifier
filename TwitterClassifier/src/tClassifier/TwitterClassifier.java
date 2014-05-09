@@ -62,7 +62,7 @@ public class TwitterClassifier {
 
 		Configuration conf = new Configuration();
 
-		conf.setStrings(Classifier.modelPath, modelPath);
+		conf.setStrings(Classifier.MODEL_PATH_CONF, modelPath);
 		
 		
 		Job job = new Job(conf, "TwitterClassifier");

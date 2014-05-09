@@ -16,10 +16,10 @@ public class Classifier {
 	
 	private static AbstractVectorClassifier classifier;
 	private static NaiveBayesModel naiveBayesModel;
-	public final static String modelPath = "modelPath";
+	public final static String MODEL_PATH_CONF = "modelPath";
 	
 	public Classifier(Configuration configuration) throws IOException {
-		
+		String modelPath = configuration.getStrings(MODEL_PATH_CONF)[0];
 		
 		naiveBayesModel= NaiveBayesModel.materialize(new Path(modelPath),configuration);
 		classifier = new StandardNaiveBayesClassifier(naiveBayesModel);
