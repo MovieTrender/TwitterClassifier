@@ -16,7 +16,6 @@ import org.apache.mahout.math.RandomAccessSparseVector;
 import org.apache.mahout.math.Vector;
 import org.apache.mahout.math.Vector.Element;
 import org.apache.mahout.vectorizer.TFIDF;
-import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 
@@ -60,7 +59,7 @@ public class Classifier {
 	     String dictionaryPath = configuration.getStrings(DICTIONARY_PATH_CONF)[0];
 	     String documentFrequencyPath = configuration.getStrings(DOCUMENT_FREQUENCY_PATH_CONF)[0];
 	 
-	     //dictionary = readDictionnary(configuration, new Path(dictionaryPath));
+	     dictionary = readDictionnary(configuration, new Path(dictionaryPath));
 	     documentFrequency = readDocumentFrequency(configuration, new Path(documentFrequencyPath));
 	
 		 naiveBayesModel= NaiveBayesModel.materialize(new Path(modelPath),configuration);
@@ -156,10 +155,11 @@ public class Classifier {
 	        Map<String, Integer> dictionnary = new HashMap<String, Integer>();
 	        
 	   
-	        for (Pair<Text, IntWritable> pair : new SequenceFileIterable<Text, IntWritable>(dictionnaryPath, true, conf)) {
-	            	dictionnary.put(pair.getFirst().toString(), pair.getSecond().get());
+	        for (Pair<Text, Text> pair : new SequenceFileIterable<Text, Text>(dictionnaryPath, true, conf)) {
+	            	dictionnary.put(pair.getFirst().toString(), Integer.parseInt(pair.getSecond().toString()));
 	            
 	        }
+	     
 	        return dictionnary;
 	    }
 	 
@@ -176,8 +176,8 @@ public class Classifier {
 	    private static Map<Integer, Long> readDocumentFrequency(Configuration conf, Path documentFrequencyPath) {
 	        Map<Integer, Long> documentFrequency = new HashMap<Integer, Long>(); 
 	        
-	        for (Pair<IntWritable, LongWritable> pair : new SequenceFileIterable<IntWritable, LongWritable>(documentFrequencyPath, true, conf)) {
-	            	documentFrequency.put(pair.getFirst().get(), pair.getSecond().get());
+	        for (Pair<Text, LongWritable> pair : new SequenceFileIterable<Text, LongWritable>(documentFrequencyPath, true, conf)) {
+	            	documentFrequency.put(Integer.parseInt(pair.getFirst().toString()), pair.getSecond().get());
 	        
 	        }
 	        return documentFrequency;

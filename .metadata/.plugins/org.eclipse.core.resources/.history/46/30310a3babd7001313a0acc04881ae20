@@ -60,7 +60,7 @@ public class Classifier {
 	     String dictionaryPath = configuration.getStrings(DICTIONARY_PATH_CONF)[0];
 	     String documentFrequencyPath = configuration.getStrings(DOCUMENT_FREQUENCY_PATH_CONF)[0];
 	 
-	     //dictionary = readDictionnary(configuration, new Path(dictionaryPath));
+	     dictionary = readDictionnary(configuration, new Path(dictionaryPath));
 	     documentFrequency = readDocumentFrequency(configuration, new Path(documentFrequencyPath));
 	
 		 naiveBayesModel= NaiveBayesModel.materialize(new Path(modelPath),configuration);
