@@ -50,7 +50,7 @@ public class TwitterClassifier {
 
 	@SuppressWarnings("deprecation")
 	public static void main(String[] args) throws Exception {
-		if (args.length < 5) {
+		if (args.length < 3) {
 			System.out.println("Arguments: [model] [tweet file] [output directory]");
 			return;
 		}
