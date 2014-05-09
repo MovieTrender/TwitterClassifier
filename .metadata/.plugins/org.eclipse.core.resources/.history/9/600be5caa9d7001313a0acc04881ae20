@@ -156,11 +156,10 @@ public class Classifier {
 	        Map<String, Integer> dictionnary = new HashMap<String, Integer>();
 	        
 	   
-	        for (Pair<Text, Text> pair : new SequenceFileIterable<Text, Text>(dictionnaryPath, true, conf)) {
-	            	dictionnary.put(pair.getFirst().toString(), Integer.parseInt(pair.getSecond().toString()));
+	        for (Pair<Text, IntWritable> pair : new SequenceFileIterable<Text, IntWritable>(dictionnaryPath, true, conf)) {
+	            	dictionnary.put(pair.getFirst().toString(), pair.getSecond().get());
 	            
 	        }
-	     
 	        return dictionnary;
 	    }
 	 

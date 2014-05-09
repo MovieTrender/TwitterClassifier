@@ -71,7 +71,7 @@ public class TwitterClassifier {
 		 * 
 		 * 		@desc Map for MapReduce framework. Takes from each line the key (TweetID) and the value (Tweet).
 		 * 
-		 * 		@param Text key. Tweet ID 
+		 * 		@param IntWritable key. Tweet ID 
 		 * 		@param Text value.		Tweet related to Tweet ID
 		 * 		@param Context.		    Context of the map reduce
 		 * 

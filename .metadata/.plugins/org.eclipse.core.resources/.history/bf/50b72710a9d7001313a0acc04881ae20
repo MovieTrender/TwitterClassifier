@@ -153,14 +153,13 @@ public class Classifier {
 	 * 		@param Path dictionnaryPath. Path to the dictionnary file.
 	 */
 	 private static Map<String, Integer> readDictionnary(Configuration conf, Path dictionnaryPath) {
-	        Map<String, Integer> dictionnary = new HashMap<String, Integer>();
+	        Map<String, Text> dictionnary = new HashMap<String, Text>();
 	        
 	   
 	        for (Pair<Text, Text> pair : new SequenceFileIterable<Text, Text>(dictionnaryPath, true, conf)) {
-	            	dictionnary.put(pair.getFirst().toString(), Integer.parseInt(pair.getSecond().toString()));
+	            	dictionnary.put(pair.getFirst().toString(), pair.getSecond());
 	            
 	        }
-	     
 	        return dictionnary;
 	    }
 	 
