@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.mahout.classifier.AbstractVectorClassifier;
 import org.apache.mahout.classifier.naivebayes.NaiveBayesModel;
@@ -18,6 +19,7 @@ import org.apache.mahout.math.Vector.Element;
 import org.apache.mahout.vectorizer.TFIDF;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.SequenceFile;
 import org.apache.hadoop.io.Text;
 
 
@@ -115,25 +117,38 @@ public class Classifier {
 		
 	}
 	
-	 private static Map<String, Integer> readDictionnary(Configuration conf, Path dictionnaryPath) {
+	 private static Map<String, Integer> readDictionnary(Configuration conf, Path dictionnaryPath) throws IOException {
 	        Map<String, Integer> dictionnary = new HashMap<String, Integer>();
-	        int i =0;
-	        for (Pair<Text, IntWritable> pair : new SequenceFileIterable<Text, IntWritable>(dictionnaryPath, true, conf)) {
-	            if (i%10==0)
-	            	dictionnary.put(pair.getFirst().toString(), pair.getSecond().get());
-	            i++;
+	        
+	        @SuppressWarnings("deprecation")
+			SequenceFile.Reader sfr = new SequenceFile.Reader(FileSystem.get(conf),dictionnaryPath,conf);
+	        
+	        Text key=null;
+	        IntWritable value=null;
+	        
+	        while (sfr.next(key,value)){
+	        	dictionnary.put(key.toString(), value.get());
 	        }
+	        
+	        sfr.close();
 	        return dictionnary;
 	    }
 	 
-	    private static Map<Integer, Long> readDocumentFrequency(Configuration conf, Path documentFrequencyPath) {
-	        Map<Integer, Long> documentFrequency = new HashMap<Integer, Long>();
-	        int i =0; 
-	        for (Pair<IntWritable, LongWritable> pair : new SequenceFileIterable<IntWritable, LongWritable>(documentFrequencyPath, true, conf)) {
-	            if (i%10==0)
-	            	documentFrequency.put(pair.getFirst().get(), pair.getSecond().get());
-	            i++;
-	        }
+	    private static Map<Integer, Long> readDocumentFrequency(Configuration conf, Path documentFrequencyPath) throws IOException {
+	        Map<Integer, Long> documentFrequency = new HashMap<Integer, Long>(); 
+	        
+	        @SuppressWarnings("deprecation")
+			SequenceFile.Reader sfr = new SequenceFile.Reader(FileSystem.get(conf),documentFrequencyPath,conf);
+	        
+	        IntWritable key=null;
+	        LongWritable value=null;
+	        
+	        while (sfr.next(key,value)){
+	        	documentFrequency.put(key.get(), value.get());
+	        }	
+	       
+	        sfr.close();
+
 	        return documentFrequency;
 	    }
 	
