@@ -1,3 +1,5 @@
+## Read [Project Documentation](https://github.com/MovieTrender/Documentation "Project Documentation")
+
 ##TwitterClassifier
 
 Classifier for tweets using a Naive Bayes model trained in Mahout
