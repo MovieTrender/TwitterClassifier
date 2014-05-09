@@ -12,11 +12,23 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.SequenceFileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
-import org.apache.mahout.math.VectorWritable;
 
+
+
+/*
+ *		Class TwitterClassifier
+ * 
+ *		@desc Classifier of tweets, using mahout and a naive bayes model.
+ *			  Process inputs:
+ *					-Naive Bayes model trained in Mahout.
+ *					-
+ *
+ *		@author Vicente Ruben Del Pino Ruiz <<ruben.delpino@gmail.com>>
+ *
+ */
 public class TwitterClassifier {
 
-	public static class ClassifierMap extends Mapper<Text, VectorWritable, Text, IntWritable> {
+	public static class ClassifierMap extends Mapper<Text, Text, Text, IntWritable> {
 		
 		private static Classifier classifier;
 		
@@ -37,7 +49,7 @@ public class TwitterClassifier {
 
 		 
 
-		public void map(Text key, VectorWritable value, Context context) throws IOException, InterruptedException {
+		public void map(Text key, Text value, Context context) throws IOException, InterruptedException {
 		
 
 			int bestCategoryId = classifier.classify(value);
@@ -52,19 +64,21 @@ public class TwitterClassifier {
 	@SuppressWarnings("deprecation")
 	public static void main(String[] args) throws Exception {
 		if (args.length < 3) {
-			System.out.println("Arguments: [model] [tweet file] [output directory]");
+			System.out.println("Arguments: [model] [documentFrequency] [dictionary] [tweet file] [output directory]");
 			return;
 		}
 		String modelPath = args[0];
-		//String dictionaryPath = args[1];
-		//String documentFrequencyPath = args[2];
-		String tweetsPath = args[1];
-		String outputPath = args[2];
+		String dictionaryPath = args[1];
+		String documentFrequencyPath = args[2];
+		String tweetsPath = args[3];
+		String outputPath = args[4];
 
 		Configuration conf = new Configuration();
 
-		conf.setStrings(Classifier.MODEL_PATH_CONF, modelPath);
-		
+        conf.setStrings(Classifier.MODEL_PATH_CONF, modelPath);
+        conf.setStrings(Classifier.DICTIONARY_PATH_CONF, dictionaryPath);
+        conf.setStrings(Classifier.DOCUMENT_FREQUENCY_PATH_CONF, documentFrequencyPath);
+ 
 		
 		Job job = new Job(conf, "TwitterClassifier");
 
