@@ -1,0 +1,67 @@
+package tClassifier;
+
+import java.io.IOException;
+import java.io.StringReader;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.TokenStream;
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
+import org.apache.lucene.util.Version;
+import org.apache.mahout.classifier.AbstractVectorClassifier;
+import org.apache.mahout.classifier.naivebayes.NaiveBayesModel;
+import org.apache.mahout.classifier.naivebayes.StandardNaiveBayesClassifier;
+import org.apache.mahout.common.Pair;
+import org.apache.mahout.common.iterator.sequencefile.SequenceFileIterable;
+import org.apache.mahout.math.RandomAccessSparseVector;
+import org.apache.mahout.math.Vector;
+import org.apache.mahout.math.Vector.Element;
+import org.apache.mahout.math.VectorWritable;
+import org.apache.mahout.vectorizer.TFIDF;
+
+import com.google.common.collect.ConcurrentHashMultiset;
+import com.google.common.collect.Multiset;
+
+public class Classifier {
+/*
+	public final static String MODEL_PATH_CONF = "modelPath";
+	public final static String DICTIONARY_PATH_CONF = "dictionaryPath";
+	public final static String DOCUMENT_FREQUENCY_PATH_CONF = "documentFrequencyPath";
+
+	private static StandardNaiveBayesClassifier classifier;
+	private static Map<String, Integer> dictionary;
+	private static Map<Integer, Long> documentFrequency;
+	private static Analyzer analyzer;
+*/
+	
+	private static AbstractVectorClassifier classifier;
+	private static NaiveBayesModel naiveBayesModel;
+	public final static String modelPath = "modelPath";
+	
+	public Classifier(Configuration configuration) throws IOException {
+		
+		
+		naiveBayesModel= NaiveBayesModel.materialize(new Path(modelPath),configuration);
+		classifier = new StandardNaiveBayesClassifier(naiveBayesModel);
+
+	
+	}
+
+	public VectorWritable classify(Pair<Text,VectorWritable> text) throws IOException {
+		
+		
+		 Vector result = classifier.classifyFull(text.getSecond().get());
+	     VectorWritable cl =new VectorWritable(result);
+	     return cl;
+		
+	}
+
+
+}

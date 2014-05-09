@@ -12,14 +12,14 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.SequenceFileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
+import org.apache.mahout.math.VectorWritable;
 
 public class TwitterClassifier {
 
-	public static class ClassifierMap extends Mapper<Text, Text, Text, IntWritable> {
-		private final static Text outputKey = new Text();
-		private final static IntWritable outputValue = new IntWritable();
+	public static class ClassifierMap extends Mapper<Text, VectorWritable, Text, VectorWritable> {
+		
 		private static Classifier classifier;
-
+		
 		@Override
 		protected void setup(Context context) throws IOException {
 			initClassifier(context);
@@ -35,48 +35,35 @@ public class TwitterClassifier {
 			}
 		}
 
+		 
 
+		public void map(Text key, VectorWritable value, Context context) throws IOException, InterruptedException {
+		
 
-		public void map(Text key, Text value, Context context) throws IOException, InterruptedException {
-			
-			String tweetId = key.toString();
-			String tweet = value.toString();
+			VectorWritable bestCategoryId = classifier.classify(value);
+			context.write(key, bestCategoryId);
+		
 
-			int bestCategoryId = classifier.classify(tweet);
-			outputValue.set(bestCategoryId);
-
-			outputKey.set(tweetId);
-			context.write(outputKey, outputValue);
 		}
+			
 	}
 
 	@SuppressWarnings("deprecation")
 	public static void main(String[] args) throws Exception {
 		if (args.length < 5) {
-			System.out.println("Arguments: [model] [dictionnary] [document frequency] [tweet file] [output directory]");
+			System.out.println("Arguments: [model] [tweet file] [output directory]");
 			return;
 		}
 		String modelPath = args[0];
-		String dictionaryPath = args[1];
-		String documentFrequencyPath = args[2];
-		String tweetsPath = args[3];
-		String outputPath = args[4];
+		//String dictionaryPath = args[1];
+		//String documentFrequencyPath = args[2];
+		String tweetsPath = args[1];
+		String outputPath = args[2];
 
 		Configuration conf = new Configuration();
 
-		conf.setStrings(Classifier.MODEL_PATH_CONF, modelPath);
-		conf.setStrings(Classifier.DICTIONARY_PATH_CONF, dictionaryPath);
-		conf.setStrings(Classifier.DOCUMENT_FREQUENCY_PATH_CONF, documentFrequencyPath);
-
-
+		conf.setStrings(Classifier.modelPath, modelPath);
 		
-		//Increasing Heap size
-		conf.set("mapreduce.map.java.opts", "-Xmx5072m");
-		//conf.set("mapreduce.task.io.sort.mb", "2024");
-		conf.set("mapreduce.map.memory.mb","3072");
-		//conf.set("mapreduce.job.jvm.numtasks", "1");
-		//conf.set("mapreduce.job.maps", "1");
-		//conf.set("mapred.job.shuffle.input.buffer.percent", "0.50");
 		
 		Job job = new Job(conf, "TwitterClassifier");
 
