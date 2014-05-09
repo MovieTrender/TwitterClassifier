@@ -68,8 +68,8 @@ public class TwitterClassifier {
 			return;
 		}
 		String modelPath = args[0];
-		String dictionaryPath = args[1];
-		String documentFrequencyPath = args[2];
+		String documentFrequencyPath = args[1];
+		String dictionaryPath = args[2];
 		String tweetsPath = args[3];
 		String outputPath = args[4];
 
