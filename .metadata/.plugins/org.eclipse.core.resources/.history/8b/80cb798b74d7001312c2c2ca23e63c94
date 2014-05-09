@@ -18,7 +18,7 @@ import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 /*
  *		Class TwitterClassifier
  * 
- *		@desc Classifier of tweets, using MapResuduce, Mahout and a Naive Bayes model.
+ *		@desc Classifier of tweets, using mahout and a naive bayes model.
  *			  Process inputs:
  *					-Naive Bayes model trained in Mahout.
  *					-Document Frequency of Training Set.
@@ -34,28 +34,11 @@ public class TwitterClassifier {
 		
 		private static Classifier classifier;
 		
-		
-		/*
-		 * 		protected void setup
-		 * 
-		 * 		@desc Setups the Mapper creating the classifier in case that is not created yet.
-		 *
-		 */	
-		
 		@Override
 		protected void setup(Context context) throws IOException {
 			initClassifier(context);
 		}
-		
-		/*
-		 * 		public void initClassifier
-		 * 
-		 * 		@desc Inits the classifier.
-		 * 
-		 * 		@param Context context. Context that will be used for extracting the configuration.
-		 * 		
-		 */	
-		
+
 		private static void initClassifier(Context context) throws IOException {
 			if (classifier == null) {
 				synchronized (ClassifierMap.class) {
@@ -67,18 +50,7 @@ public class TwitterClassifier {
 		}
 
 		 
-		/*
-		 * 		public void map
-		 * 
-		 * 		@desc Map for MapReduce framework. Takes from each line the key (TweetID) and the value (Tweet).
-		 * 
-		 * 		@param IntWritable key. Tweet ID 
-		 * 		@param Text value.		Tweet related to Tweet ID
-		 * 		@param Context.		    Context of the map reduce
-		 * 
-		 * 		@return (via context) TweetID and Category
-		 * 
-		 */	
+
 		public void map(IntWritable key, Text value, Context context) throws IOException, InterruptedException {
 		
 
@@ -91,33 +63,24 @@ public class TwitterClassifier {
 			
 	}
 
-	
-	
-	
 	@SuppressWarnings("deprecation")
 	public static void main(String[] args) throws Exception {
-		
-		//Filter the input to the process
 		if (args.length < 3) {
 			System.out.println("Arguments: [model] [documentFrequency] [dictionary] [tweet file] [output directory]");
 			return;
 		}
-		
-		//Read the parameters in the command line
 		String modelPath = args[0];
 		String documentFrequencyPath = args[1];
 		String dictionaryPath = args[2];
 		String tweetsPath = args[3];
 		String outputPath = args[4];
 
-		//Setup the configuration for the MapReduce
 		Configuration conf = new Configuration();
 
         conf.setStrings(Classifier.MODEL_PATH_CONF, modelPath);
         conf.setStrings(Classifier.DICTIONARY_PATH_CONF, dictionaryPath);
         conf.setStrings(Classifier.DOCUMENT_FREQUENCY_PATH_CONF, documentFrequencyPath);
         
-        //Configure the job to be executed
 		Job job = new Job(conf, "TwitterClassifier");
 
 		job.setJarByClass(TwitterClassifier.class);
@@ -133,7 +96,6 @@ public class TwitterClassifier {
 		FileInputFormat.addInputPath(job, new Path(tweetsPath));
 		FileOutputFormat.setOutputPath(job, new Path(outputPath));
 
-		//Execute the job
 		job.waitForCompletion(true);
 	}
 }

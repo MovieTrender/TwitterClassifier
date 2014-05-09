@@ -18,7 +18,7 @@ import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 /*
  *		Class TwitterClassifier
  * 
- *		@desc Classifier of tweets, using MapResuduce, Mahout and a Naive Bayes model.
+ *		@desc Classifier of tweets, using mahout and a naive bayes model.
  *			  Process inputs:
  *					-Naive Bayes model trained in Mahout.
  *					-Document Frequency of Training Set.
@@ -38,7 +38,7 @@ public class TwitterClassifier {
 		/*
 		 * 		protected void setup
 		 * 
-		 * 		@desc Setups the Mapper creating the classifier in case that is not created yet.
+		 * 		@desc Setups the mapper creating the classifier in case that is not created yet.
 		 *
 		 */	
 		
@@ -52,7 +52,7 @@ public class TwitterClassifier {
 		 * 
 		 * 		@desc Inits the classifier.
 		 * 
-		 * 		@param Context context. Context that will be used for extracting the configuration.
+		 * 		@param Context folder. Context that will be used for extracting the configuration.
 		 * 		
 		 */	
 		
@@ -70,13 +70,11 @@ public class TwitterClassifier {
 		/*
 		 * 		public void map
 		 * 
-		 * 		@desc Map for MapReduce framework. Takes from each line the key (TweetID) and the value (Tweet).
+		 * 		@desc Classifies the tweets in the sequence file.
 		 * 
 		 * 		@param IntWritable key. Tweet ID 
 		 * 		@param Text value.		Tweet related to Tweet ID
 		 * 		@param Context.		    Context of the map reduce
-		 * 
-		 * 		@return (via context) TweetID and Category
 		 * 
 		 */	
 		public void map(IntWritable key, Text value, Context context) throws IOException, InterruptedException {
@@ -91,9 +89,6 @@ public class TwitterClassifier {
 			
 	}
 
-	
-	
-	
 	@SuppressWarnings("deprecation")
 	public static void main(String[] args) throws Exception {
 		

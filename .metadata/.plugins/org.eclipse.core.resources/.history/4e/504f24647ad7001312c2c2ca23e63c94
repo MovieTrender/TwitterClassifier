@@ -93,7 +93,19 @@ public class TwitterClassifier {
 
 	
 	
-	
+	/*
+	 * 		public void map
+	 * 
+	 * 		@desc Map for MapReduce framework. Takes from each line the key (TweetID) and the value (Tweet).
+	 * 
+	 * 		@param IntWritable key. Tweet ID 
+	 * 		@param Text value.		Tweet related to Tweet ID
+	 * 		@param Context.		    Context of the map reduce
+	 * 
+	 * 		@return (via context) TweetID and Category
+	 * 
+	 */	
+
 	@SuppressWarnings("deprecation")
 	public static void main(String[] args) throws Exception {
 		

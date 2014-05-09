@@ -112,7 +112,7 @@ public class Classifier {
 	      
 	      Vector vector = new RandomAccessSparseVector(10000);
 	      TFIDF tfidf = new TFIDF();
-	      //Create a TF-IDF vector for each tweet
+	      
 	        for (Entry<String, Integer> entry: words.entrySet()) {
 	            String word = entry.getKey();
 	            int count = entry.getValue();
@@ -143,15 +143,6 @@ public class Classifier {
 		
 	}
 	
-	/*
-	 * 		private static readDictionary
-	 * 
-	 * 		@desc Reads the dictionnary and loads in memory.
-	 * 			  With bigs train sets this consumes a high volume of memory.
-	 * 
-	 * 		@param Configuration Conf. Configuration from the cluster
-	 * 		@param Path dictionnaryPath. Path to the dictionnary file.
-	 */
 	 private static Map<String, Integer> readDictionnary(Configuration conf, Path dictionnaryPath) {
 	        Map<String, Integer> dictionnary = new HashMap<String, Integer>();
 	        
@@ -163,16 +154,6 @@ public class Classifier {
 	        return dictionnary;
 	    }
 	 
-	 
-		/*
-		 * 		private static readDocumentFrequency
-		 * 
-		 * 		@desc Reads the document frequency and loads in memory.
-		 * 			  With bigs train sets this consumes a high volume of memory.
-		 * 
-		 * 		@param Configuration Conf. Configuration from the cluster
-		 * 		@param Path documentFrequencyPath. Path to the document frequency file.
-		 */
 	    private static Map<Integer, Long> readDocumentFrequency(Configuration conf, Path documentFrequencyPath) {
 	        Map<Integer, Long> documentFrequency = new HashMap<Integer, Long>(); 
 	        

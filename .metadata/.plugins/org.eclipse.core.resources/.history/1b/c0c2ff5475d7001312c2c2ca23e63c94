@@ -31,6 +31,7 @@ import org.apache.hadoop.io.Text;
  */	
 public class Classifier {
 
+	
 	private static AbstractVectorClassifier classifier;
 	private static NaiveBayesModel naiveBayesModel;
 	private static Map<String, Integer> dictionary;
@@ -41,19 +42,6 @@ public class Classifier {
 	public final static String DOCUMENT_FREQUENCY_PATH_CONF = "documentFrequencyPath";
 	public final static String MODEL_PATH_CONF = "modelPath";
 	
-	
-	/*
-	 * 		public Classifier
-	 * 
-	 * 		@desc Initialize all the variables to be used and reads:
-	 * 				--Dictionnary or train set.
-	 * 				--Document Frequency of train set.
-	 * 				--Naive Bayes model.
-	 * 				-- 
-	 * 
-	 * 		@param Configuration configuration. Configuration of the cluster.
-	 * 
-	 */	
 	public Classifier(Configuration configuration) throws IOException {
 		
 		 String modelPath = configuration.getStrings(MODEL_PATH_CONF)[0];
@@ -69,31 +57,24 @@ public class Classifier {
 	
 	}
 
-	/*
-	 * 		public int classify
-	 * 
-	 * 		@desc Main part of the class. Classifies a text using Naive Bayes and a model created by Mahout.
-	 * 
-	 * 		@param Text text. Text of the tweet to classify
-	 */	
 	public int classify(Text text) throws IOException {
 		
 
 	      int documentCount = documentFrequency.get(-1).intValue();
 	      HashMap<String, Integer> words = new HashMap<String, Integer>();
 	 
-	      //Create our own TF-IDF vector with the tweet text
+	      // extract words from tweet
 	      
 	      String delims = "[ ]+";
 	      String [] ts = text.toString().split(delims);
 	      
 	      int wordCount = 0;
 	
-	      //Iterate through each word in the tweet and calculate its counting.
+	      
 	      for (int i=0;i<ts.length;i++){
 	    	  String word = ts[i];
 	    	  Integer wordId = dictionary.get(word);
-              // Only take words that are in our train set
+              // if the word is not in the dictionary, skip it
               if (wordId != null) {
             	
             	  if(!words.containsKey(word)){ 
@@ -109,10 +90,10 @@ public class Classifier {
 	      }
 	       
 	 
-	      
+	      // create vector wordId => weight using tfidf
 	      Vector vector = new RandomAccessSparseVector(10000);
 	      TFIDF tfidf = new TFIDF();
-	      //Create a TF-IDF vector for each tweet
+	      
 	        for (Entry<String, Integer> entry: words.entrySet()) {
 	            String word = entry.getKey();
 	            int count = entry.getValue();
@@ -122,10 +103,9 @@ public class Classifier {
 	            vector.setQuick(wordId, tfIdfValue);
 	        }
 		
-		//Classify the TF-IDF vector created using Mahout model
+		
 		 Vector result = classifier.classifyFull(vector);
 	     
-		 //Iterate through the scores and take the category with the higher.
 	     double bestScore = -Double.MAX_VALUE;
 	     int bestCategoryId = -1;
 	        for(Element element: result) {
@@ -143,15 +123,6 @@ public class Classifier {
 		
 	}
 	
-	/*
-	 * 		private static readDictionary
-	 * 
-	 * 		@desc Reads the dictionnary and loads in memory.
-	 * 			  With bigs train sets this consumes a high volume of memory.
-	 * 
-	 * 		@param Configuration Conf. Configuration from the cluster
-	 * 		@param Path dictionnaryPath. Path to the dictionnary file.
-	 */
 	 private static Map<String, Integer> readDictionnary(Configuration conf, Path dictionnaryPath) {
 	        Map<String, Integer> dictionnary = new HashMap<String, Integer>();
 	        
@@ -163,16 +134,6 @@ public class Classifier {
 	        return dictionnary;
 	    }
 	 
-	 
-		/*
-		 * 		private static readDocumentFrequency
-		 * 
-		 * 		@desc Reads the document frequency and loads in memory.
-		 * 			  With bigs train sets this consumes a high volume of memory.
-		 * 
-		 * 		@param Configuration Conf. Configuration from the cluster
-		 * 		@param Path documentFrequencyPath. Path to the document frequency file.
-		 */
 	    private static Map<Integer, Long> readDocumentFrequency(Configuration conf, Path documentFrequencyPath) {
 	        Map<Integer, Long> documentFrequency = new HashMap<Integer, Long>(); 
 	        
