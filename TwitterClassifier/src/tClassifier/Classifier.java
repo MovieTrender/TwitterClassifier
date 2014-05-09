@@ -119,7 +119,7 @@ public class Classifier {
 	        Map<String, Integer> dictionnary = new HashMap<String, Integer>();
 	        int i =0;
 	        for (Pair<Text, IntWritable> pair : new SequenceFileIterable<Text, IntWritable>(dictionnaryPath, true, conf)) {
-	            if (i%2==0)
+	            if (i%10==0)
 	            	dictionnary.put(pair.getFirst().toString(), pair.getSecond().get());
 	            i++;
 	        }
@@ -130,7 +130,7 @@ public class Classifier {
 	        Map<Integer, Long> documentFrequency = new HashMap<Integer, Long>();
 	        int i =0; 
 	        for (Pair<IntWritable, LongWritable> pair : new SequenceFileIterable<IntWritable, LongWritable>(documentFrequencyPath, true, conf)) {
-	            if (i%2==0)
+	            if (i%10==0)
 	            	documentFrequency.put(pair.getFirst().get(), pair.getSecond().get());
 	            i++;
 	        }
