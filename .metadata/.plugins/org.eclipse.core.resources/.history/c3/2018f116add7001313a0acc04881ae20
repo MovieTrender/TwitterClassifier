@@ -78,7 +78,7 @@ public class Classifier {
 	 */	
 	public int classify(Text text) throws IOException {
 		
-
+/*
 	      int documentCount = documentFrequency.get(-1).intValue();
 	      HashMap<String, Integer> words = new HashMap<String, Integer>();
 	 
@@ -138,7 +138,8 @@ public class Classifier {
 	        }
 	 
 	     return bestCategoryId;
-	     
+	     */
+	     return 1;
 
 		
 	}
