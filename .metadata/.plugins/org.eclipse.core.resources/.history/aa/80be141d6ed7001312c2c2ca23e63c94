@@ -18,6 +18,7 @@ import org.apache.mahout.math.Vector.Element;
 import org.apache.mahout.vectorizer.TFIDF;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.SequenceFile;
 import org.apache.hadoop.io.Text;
 
 

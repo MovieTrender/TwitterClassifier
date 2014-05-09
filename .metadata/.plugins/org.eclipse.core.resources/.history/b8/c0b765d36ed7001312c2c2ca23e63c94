@@ -79,10 +79,7 @@ public class TwitterClassifier {
         conf.setStrings(Classifier.DICTIONARY_PATH_CONF, dictionaryPath);
         conf.setStrings(Classifier.DOCUMENT_FREQUENCY_PATH_CONF, documentFrequencyPath);
  
-		conf.set("mapreduce.map.java.opts", "-Xmx20600M");
-		conf.set("mapreduce.reduce.memory.mb","2600");
-        
-        
+		
 		Job job = new Job(conf, "TwitterClassifier");
 
 		job.setJarByClass(TwitterClassifier.class);
