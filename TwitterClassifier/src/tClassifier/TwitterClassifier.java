@@ -4,18 +4,13 @@ import java.io.IOException;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.BytesWritable;
-import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
-import org.apache.hadoop.mapreduce.lib.input.KeyValueTextInputFormat;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
-import org.apache.hadoop.mapreduce.Mapper.Context;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
-import org.apache.hadoop.mapreduce.lib.input.SequenceFileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
-import org.apache.hadoop.io.SequenceFile;
+import org.apache.hadoop.mapreduce.lib.input.SequenceFileInputFormat;
 
 
 
@@ -122,26 +117,6 @@ public class TwitterClassifier {
         conf.setStrings(Classifier.DICTIONARY_PATH_CONF, dictionaryPath);
         conf.setStrings(Classifier.DOCUMENT_FREQUENCY_PATH_CONF, documentFrequencyPath);
         
-   
-        Path tweets = new Path(tweetsPath);
-        
-        SequenceFile.Reader reader = new SequenceFile.Reader(conf, SequenceFile.Reader.file(tweets));
-        
-        IntWritable key =null;
-        
-        BytesWritable value = null;
-        
-        while (reader.next(key, value)) {
-           System.out.println("key : " + key + " - value : " + new String(value.getBytes()));
-        }
-        
-        reader.close();
-        
-        
-     
-        
-        
-        /*
         conf.set("mapreduce.map.memory.mb","3000");
         conf.set("mapreduce.map.java.opts","-Xmx2024m");
         conf.set("mapreduce.task.io.sort.mb", "1000");
@@ -156,7 +131,7 @@ public class TwitterClassifier {
 		job.setOutputValueClass(Text.class);
 		job.setMapperClass(ClassifierMap.class);
 
-		job.setInputFormatClass(KeyValueTextInputFormat.class);
+		job.setInputFormatClass(SequenceFileInputFormat.class);
 		job.setOutputFormatClass(TextOutputFormat.class);
 
 		FileInputFormat.addInputPath(job, new Path(tweetsPath));
@@ -164,11 +139,5 @@ public class TwitterClassifier {
 
 		//Execute the job
 		job.waitForCompletion(true);
-		
-		*/
 	}
-
-
-
-
 }
