@@ -119,8 +119,8 @@ public class TwitterClassifier {
         conf.setStrings(Classifier.DOCUMENT_FREQUENCY_PATH_CONF, documentFrequencyPath);
         
         conf.set("mapreduce.map.memory.mb","3000");
-        conf.set("mapreduce.map.java.opts","-Xmx2024m");
-        conf.set("mapreduce.task.io.sort.mb", "2000");
+        conf.set("mapreduce.map.java.opts","-Xmx3024m");
+        conf.set("mapreduce.task.io.sort.mb", "3000");
         
         //Configure the job to be executed
 		Job job = new Job(conf, "TwitterClassifier");
