@@ -11,5 +11,6 @@
 	<classpathentry kind="lib" path="/Users/ruben/Cursos/Harvard/2014/HW12/Software/hadoop-2.0.0-cdh4.6.0/share/hadoop/mapreduce2/hadoop-mapreduce-client-core-2.0.0-cdh4.6.0.jar"/>
 	<classpathentry kind="lib" path="/Users/ruben/Cursos/Harvard/2014/HW12/Software/hadoop-2.0.0-cdh4.6.0/share/hadoop/mapreduce2/hadoop-mapreduce-client-common-2.0.0-cdh4.6.0.jar"/>
 	<classpathentry kind="lib" path="/Users/ruben/Cursos/Harvard/2014/HW12/Software/hadoop-2.0.0-cdh4.6.0/share/hadoop/mapreduce2/hadoop-mapreduce-client-jobclient-2.0.0-cdh4.6.0.jar"/>
+	<classpathentry kind="lib" path="/Users/ruben/Cursos/Harvard/2014/HW12/Software/lucene-4.3.0/classification/lucene-classification-4.3.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
