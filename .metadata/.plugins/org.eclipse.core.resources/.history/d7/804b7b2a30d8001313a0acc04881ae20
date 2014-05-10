@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
@@ -31,9 +30,9 @@ import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
  */
 public class TwitterClassifier {
 
-	public static class ClassifierMap extends Mapper<IntWritable, Text, Text, Text> {
+	public static class ClassifierMap extends Mapper<Text, Text, Text, Text> {
 		
-//		private static Classifier classifier;
+		private static Classifier classifier;
 		
 		
 		/*
@@ -81,7 +80,7 @@ public class TwitterClassifier {
 		 * 		@return (via context) TweetID and Category
 		 * 
 		 */	
-		public void map(IntWritable key, Text value, Context context) throws IOException, InterruptedException {
+		public void map(Text key, Text value, Context context) throws IOException, InterruptedException {
 		
 
 			//int bestCategoryId =classifier.classify(value);

@@ -33,7 +33,7 @@ public class TwitterClassifier {
 
 	public static class ClassifierMap extends Mapper<IntWritable, Text, Text, Text> {
 		
-//		private static Classifier classifier;
+		private static Classifier classifier;
 		
 		
 		/*
