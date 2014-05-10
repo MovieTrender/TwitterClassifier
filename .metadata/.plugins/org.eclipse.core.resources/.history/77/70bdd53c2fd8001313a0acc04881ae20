@@ -56,8 +56,7 @@ public class TwitterClassifier {
 		 * 		
 		 */	
 		
-/*		
-  		private static void initClassifier(Context context) throws IOException {
+/*		private static void initClassifier(Context context) throws IOException {
 			if (classifier == null) {
 				synchronized (ClassifierMap.class) {
 					if (classifier == null) {
@@ -65,8 +64,8 @@ public class TwitterClassifier {
 						}
 				}
 			}
-		}
-*/
+*/		}
+
 		 
 		/*
 		 * 		public void map

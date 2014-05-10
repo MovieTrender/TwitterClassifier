@@ -44,7 +44,7 @@ public class TwitterClassifier {
 		
 		@Override
 		protected void setup(Context context) throws IOException {
-//			initClassifier(context);
+			initClassifier(context);
 		}
 		
 		/*
@@ -56,8 +56,7 @@ public class TwitterClassifier {
 		 * 		
 		 */	
 		
-/*		
-  		private static void initClassifier(Context context) throws IOException {
+		private static void initClassifier(Context context) throws IOException {
 			if (classifier == null) {
 				synchronized (ClassifierMap.class) {
 					if (classifier == null) {
@@ -66,7 +65,7 @@ public class TwitterClassifier {
 				}
 			}
 		}
-*/
+
 		 
 		/*
 		 * 		public void map
@@ -83,13 +82,10 @@ public class TwitterClassifier {
 		public void map(Text key, Text value, Context context) throws IOException, InterruptedException {
 		
 
-			//int bestCategoryId =classifier.classify(value);
-			//Text category = new Text(Integer.toString(bestCategoryId));
-			//context.write(key, category);
+			int bestCategoryId =classifier.classify(value);
+			Text category = new Text(Integer.toString(bestCategoryId));
+			context.write(key, category);
 		
-			Text k = new Text("1");
-			Text category = new Text("2");
-			context.write(k, category);
 
 		}
 			
