@@ -31,10 +31,10 @@ import org.apache.hadoop.io.Text;
  */	
 public class Classifier {
 
-	private AbstractVectorClassifier classifier;
-	private NaiveBayesModel naiveBayesModel;
-	private Map<String, Integer> dictionary;
-	private Map<Integer, Long> documentFrequency;
+	private static AbstractVectorClassifier classifier;
+	private static NaiveBayesModel naiveBayesModel;
+	private static Map<String, Integer> dictionary;
+	private static Map<Integer, Long> documentFrequency;
 	
 	
 	public final static String DICTIONARY_PATH_CONF = "dictionaryPath";
@@ -152,7 +152,7 @@ public class Classifier {
 	 * 		@param Configuration Conf. Configuration from the cluster
 	 * 		@param Path dictionnaryPath. Path to the dictionnary file.
 	 */
-	 private Map<String, Integer> readDictionnary(Configuration conf, Path dictionnaryPath) {
+	 private static Map<String, Integer> readDictionnary(Configuration conf, Path dictionnaryPath) {
 	        Map<String, Integer> dictionnary = new HashMap<String, Integer>();
 	        
 	   
@@ -173,7 +173,7 @@ public class Classifier {
 		 * 		@param Configuration Conf. Configuration from the cluster
 		 * 		@param Path documentFrequencyPath. Path to the document frequency file.
 		 */
-	    private Map<Integer, Long> readDocumentFrequency(Configuration conf, Path documentFrequencyPath) {
+	    private static Map<Integer, Long> readDocumentFrequency(Configuration conf, Path documentFrequencyPath) {
 	        Map<Integer, Long> documentFrequency = new HashMap<Integer, Long>(); 
 	        
 	        for (Pair<IntWritable, LongWritable> pair : new SequenceFileIterable<IntWritable, LongWritable>(documentFrequencyPath, true, conf)) {

@@ -37,9 +37,9 @@ public class Classifier {
 	private Map<Integer, Long> documentFrequency;
 	
 	
-	public final static String DICTIONARY_PATH_CONF = "dictionaryPath";
-	public final static String DOCUMENT_FREQUENCY_PATH_CONF = "documentFrequencyPath";
-	public final static String MODEL_PATH_CONF = "modelPath";
+	public final String DICTIONARY_PATH_CONF = "dictionaryPath";
+	public final String DOCUMENT_FREQUENCY_PATH_CONF = "documentFrequencyPath";
+	public final String MODEL_PATH_CONF = "modelPath";
 	
 	
 	/*

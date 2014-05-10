@@ -37,9 +37,9 @@ public class Classifier {
 	private Map<Integer, Long> documentFrequency;
 	
 	
-	public final static String DICTIONARY_PATH_CONF = "dictionaryPath";
-	public final static String DOCUMENT_FREQUENCY_PATH_CONF = "documentFrequencyPath";
-	public final static String MODEL_PATH_CONF = "modelPath";
+	public final String DICTIONARY_PATH_CONF = "dictionaryPath";
+	public final String DOCUMENT_FREQUENCY_PATH_CONF = "documentFrequencyPath";
+	public final String MODEL_PATH_CONF = "modelPath";
 	
 	
 	/*
@@ -152,7 +152,7 @@ public class Classifier {
 	 * 		@param Configuration Conf. Configuration from the cluster
 	 * 		@param Path dictionnaryPath. Path to the dictionnary file.
 	 */
-	 private Map<String, Integer> readDictionnary(Configuration conf, Path dictionnaryPath) {
+	 private static Map<String, Integer> readDictionnary(Configuration conf, Path dictionnaryPath) {
 	        Map<String, Integer> dictionnary = new HashMap<String, Integer>();
 	        
 	   
@@ -173,7 +173,7 @@ public class Classifier {
 		 * 		@param Configuration Conf. Configuration from the cluster
 		 * 		@param Path documentFrequencyPath. Path to the document frequency file.
 		 */
-	    private Map<Integer, Long> readDocumentFrequency(Configuration conf, Path documentFrequencyPath) {
+	    private static Map<Integer, Long> readDocumentFrequency(Configuration conf, Path documentFrequencyPath) {
 	        Map<Integer, Long> documentFrequency = new HashMap<Integer, Long>(); 
 	        
 	        for (Pair<IntWritable, LongWritable> pair : new SequenceFileIterable<IntWritable, LongWritable>(documentFrequencyPath, true, conf)) {
