@@ -3,14 +3,12 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry kind="lib" path="/Users/ruben/Cursos/Harvard/2014/HW12/Software/hadoop-2.0.0-cdh4.6.0/share/hadoop/common/hadoop-common-2.0.0-cdh4.6.0.jar"/>
-	<classpathentry kind="lib" path="/Users/ruben/Cursos/Harvard/2014/HW12/Software/lucene-4.3.0/core/lucene-core-4.3.0.jar"/>
-	<classpathentry kind="lib" path="/Users/ruben/Cursos/Harvard/2014/HW12/Software/lucene-4.3.0/analysis/common/lucene-analyzers-common-4.3.0.jar"/>
 	<classpathentry kind="lib" path="/Users/ruben/Cursos/Harvard/2014/HW12/Software/mahout-0.7-cdh4.6.0/mahout-core-0.7-cdh4.6.0.jar"/>
 	<classpathentry kind="lib" path="/Users/ruben/Cursos/Harvard/2014/HW12/Software/mahout-0.7-cdh4.6.0/mahout-math-0.7-cdh4.6.0.jar"/>
 	<classpathentry kind="lib" path="/Users/ruben/Cursos/Harvard/2014/HW12/Software/guava-17.0.jar"/>
 	<classpathentry kind="lib" path="/Users/ruben/Cursos/Harvard/2014/HW12/Software/hadoop-2.0.0-cdh4.6.0/share/hadoop/mapreduce2/hadoop-mapreduce-client-core-2.0.0-cdh4.6.0.jar"/>
 	<classpathentry kind="lib" path="/Users/ruben/Cursos/Harvard/2014/HW12/Software/hadoop-2.0.0-cdh4.6.0/share/hadoop/mapreduce2/hadoop-mapreduce-client-common-2.0.0-cdh4.6.0.jar"/>
 	<classpathentry kind="lib" path="/Users/ruben/Cursos/Harvard/2014/HW12/Software/hadoop-2.0.0-cdh4.6.0/share/hadoop/mapreduce2/hadoop-mapreduce-client-jobclient-2.0.0-cdh4.6.0.jar"/>
-	<classpathentry kind="lib" path="/Users/ruben/Cursos/Harvard/2014/HW12/Software/lucene-4.3.0/classification/lucene-classification-4.3.0.jar"/>
+	<classpathentry kind="lib" path="/Users/ruben/Cursos/Harvard/2014/HW12/Software/lucene-core-2.9.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
