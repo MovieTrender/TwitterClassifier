@@ -56,22 +56,22 @@ public class Classifier {
 	 */	
 	public Classifier(Configuration configuration) throws IOException {
 		
-		 String modelPath = configuration.getStrings(MODEL_PATH_CONF)[0];
-	     String dictionaryPath = configuration.getStrings(DICTIONARY_PATH_CONF)[0];
-	     String documentFrequencyPath = configuration.getStrings(DOCUMENT_FREQUENCY_PATH_CONF)[0];
+		String modelPath = configuration.getStrings(MODEL_PATH_CONF)[0];
+		String dictionaryPath = configuration.getStrings(DICTIONARY_PATH_CONF)[0];
+		String documentFrequencyPath = configuration.getStrings(DOCUMENT_FREQUENCY_PATH_CONF)[0];
 	 
-	     dictionary = readDictionnary(configuration, new Path(dictionaryPath));
-	     documentFrequency = readDocumentFrequency(configuration, new Path(documentFrequencyPath));
+		dictionary = readDictionnary(configuration, new Path(dictionaryPath));
+		documentFrequency = readDocumentFrequency(configuration, new Path(documentFrequencyPath));
 	
-		 naiveBayesModel= NaiveBayesModel.materialize(new Path(modelPath),configuration);
-		 classifier = new StandardNaiveBayesClassifier(naiveBayesModel);
+		naiveBayesModel= NaiveBayesModel.materialize(new Path(modelPath),configuration);
+		classifier = new StandardNaiveBayesClassifier(naiveBayesModel);
 
 	
 	}
 	
 
 	/*
-	 * 		public int getBestCategory
+	 * 		private int getBestCategory
 	 * 
 	 * 		@desc Gets the best category for a vector of scores
 	 * 
@@ -83,48 +83,57 @@ public class Classifier {
 	private int getBestCategory(Vector result){
 		
 		
-		 //Iterate through the scores and take the category with the higher.
-	     double bestScore = -Double.MAX_VALUE;
-	     int bestCategoryId = -1;
-	        for(Element element: result) {
-	            int categoryId = element.index();
-	            double score = element.get();
-	            if (score > bestScore) {
-	                bestScore = score;
-	                bestCategoryId = categoryId;
-	            }
-	        }
+		//Iterate through the scores and take the category with the higher.
+		double bestScore = -Double.MAX_VALUE;
+		int bestCategoryId = -1;
+		
+		for(Element element: result) {
+			int categoryId = element.index();
+			double score = element.get();
+
+			if (score > bestScore) {
+				bestScore = score;
+				bestCategoryId = categoryId;
+				}
+			}
 	        
-	      return bestCategoryId;
+		return bestCategoryId;
 	}
 	
+	
+	
+	
 	/*
-	 * 		public Vector generateTFIDFVector
+	 * 		private Vector generateTFIDFVector
 	 * 
-	 * 		@desc Generates a TFIDF vector for the words
+	 * 		@desc Generates a TFIDF vector for words
 	 * 
 	 * 		@param HasMap words. Words to use for generating the vector
-	 * 		@param int wordCount. Count of the times the word is in the set
-	 * 		@param int documentCount. Count of documents
+	 * 		@param int wordCount. Number of words
+	 * 		@param int documentCount. Document counting
 	 * 
 	 * 		@return bestCategoryID. Best category for the vector
 	 */	
 	
 	private Vector generateTFIDFVector (HashMap<String, Integer> words, int wordCount, int documentCount){
 		
-		 Vector vector = new RandomAccessSparseVector(10000);
-	      TFIDF tfidf = new TFIDF();
-	      //Create a TF-IDF vector for each tweet
-	        for (Entry<String, Integer> entry: words.entrySet()) {
-	            String word = entry.getKey();
-	            int count = entry.getValue();
-	            Integer wordId = dictionary.get(word);
-	            Long freq = documentFrequency.get(wordId);
-	            double tfIdfValue = tfidf.calculate(count, freq.intValue(), wordCount, documentCount);
-	            vector.setQuick(wordId, tfIdfValue);
-	        }
+		Vector vector = new RandomAccessSparseVector(10000);
+		TFIDF tfidf = new TFIDF();
+	     
+		//Create a TF-IDF vector for each tweet
+	     
+		for (Entry<String, Integer> entry: words.entrySet()) {
+			
+			String word = entry.getKey();
+			int count = entry.getValue();
+			Integer wordId = dictionary.get(word);
+			Long freq = documentFrequency.get(wordId);
+			double tfIdfValue = tfidf.calculate(count, freq.intValue(), wordCount, documentCount);
+			vector.setQuick(wordId, tfIdfValue);
 	        
-	      return vector;  
+		}
+	        
+		return vector;  
 	}
 	
 	
@@ -139,47 +148,43 @@ public class Classifier {
 	public int classify(Text text) throws IOException {
 		
 
-	      int documentCount = documentFrequency.get(-1).intValue();
-	      HashMap<String, Integer> words = new HashMap<String, Integer>();
-	      int bestCategoryID;
+		int documentCount = documentFrequency.get(-1).intValue();
+		HashMap<String, Integer> words = new HashMap<String, Integer>();  
+		int bestCategoryID;
 	 
-	      //Create our own TF-IDF vector with the tweet text
+		//Create our own TF-IDF vector with the tweet text  
+		String delims = "[ ]+";
+		String [] ts = text.toString().split(delims);
 	      
-	      String delims = "[ ]+";
-	      String [] ts = text.toString().split(delims);
-	      
-	      int wordCount = 0;
+		int wordCount = 0;
 	
-	      //Iterate through each word in the tweet and calculate its counting.
-	      for (int i=0;i<ts.length;i++){
-	    	  String word = ts[i];
-	    	  Integer wordId = dictionary.get(word);
-              // Only take words that are in our train set
-              if (wordId != null) {
-            	
-            	  if(!words.containsKey(word)){ 
-                      words.put(word, 1); 
-                  }else{
-                      int countWord = words.get(word) + 1; 
-                      words.put(word, countWord); 
-                  }
-
-                  wordCount++;
-              }
-	      }
+		//Iterate through each word in the tweet and calculate its counting.
+		for (int i=0;i<ts.length;i++){
+	    	 
+			String word = ts[i];
+			Integer wordId = dictionary.get(word);  
+			// Only take words that are in our train set
+			if (wordId != null) {	
+				if(!words.containsKey(word)){ 
+					words.put(word, 1);   
+				}else{
+					int countWord = words.get(word) + 1; 
+					words.put(word, countWord); 
+				}
+				wordCount++;  
+			}
+		}
 	       
-	 
-	     //Generate TFIDF vector
-	      Vector vector = generateTFIDFVector(words,wordCount,documentCount);
-	     
-		
-		 //Classify the TF-IDF vector created using Mahout model
-		 Vector result = classifier.classifyFull(vector);
+		//Generate TFIDF vector  
+		Vector vector = generateTFIDFVector(words,wordCount,documentCount);
+	      
+		//Classify the TF-IDF vector created using Mahout model
+		Vector result = classifier.classifyFull(vector);
 		 
-	     //Get the best category for the vector
-		 bestCategoryID =getBestCategory(result);
+		//Get the best category for the vector
+		bestCategoryID =getBestCategory(result);
 	 
-	     return bestCategoryID; 
+		return bestCategoryID; 
 
 		
 	}
@@ -193,36 +198,39 @@ public class Classifier {
 	 * 		@param Configuration Conf. Configuration from the cluster
 	 * 		@param Path dictionnaryPath. Path to the dictionnary file.
 	 */
-	 private Map<String, Integer> readDictionnary(Configuration conf, Path dictionnaryPath) {
-	        Map<String, Integer> dictionnary = new HashMap<String, Integer>();
+	
+	private Map<String, Integer> readDictionnary(Configuration conf, Path dictionnaryPath) {
+		 Map<String, Integer> dictionnary = new HashMap<String, Integer>();
 	        
 	   
-	        for (Pair<Text, IntWritable> pair : new SequenceFileIterable<Text, IntWritable>(dictionnaryPath, true, conf)) {
-	            	dictionnary.put(pair.getFirst().toString(), pair.getSecond().get());
-	            
-	        }
-	        return dictionnary;
-	    }
+		 for (Pair<Text, IntWritable> pair : new SequenceFileIterable<Text, IntWritable>(dictionnaryPath, true, conf)) {
+			 dictionnary.put(pair.getFirst().toString(), pair.getSecond().get());   
+		 }
+		 return dictionnary;
+	
+	}
 	 
 	 
-		/*
-		 * 		private static readDocumentFrequency
-		 * 
-		 * 		@desc Reads the document frequency and loads in memory.
-		 * 			  With bigs train sets this consumes a high volume of memory.
-		 * 
-		 * 		@param Configuration Conf. Configuration from the cluster
-		 * 		@param Path documentFrequencyPath. Path to the document frequency file.
-		 */
-	    private Map<Integer, Long> readDocumentFrequency(Configuration conf, Path documentFrequencyPath) {
-	        Map<Integer, Long> documentFrequency = new HashMap<Integer, Long>(); 
+	/*
+	 * 		private static readDocumentFrequency
+	 * 
+	 * 		@desc Reads the document frequency and loads in memory.
+	 * 			  With bigs train sets this consumes a high volume of memory.
+	 * 
+	 * 		@param Configuration Conf. Configuration from the cluster
+	 * 		@param Path documentFrequencyPath. Path to the document frequency file.
+	 */
+	private Map<Integer, Long> readDocumentFrequency(Configuration conf, Path documentFrequencyPath) {
+		
+		Map<Integer, Long> documentFrequency = new HashMap<Integer, Long>(); 
 	        
-	        for (Pair<IntWritable, LongWritable> pair : new SequenceFileIterable<IntWritable, LongWritable>(documentFrequencyPath, true, conf)) {
-	            	documentFrequency.put(pair.getFirst().get(), pair.getSecond().get());
+		for (Pair<IntWritable, LongWritable> pair : new SequenceFileIterable<IntWritable, LongWritable>(documentFrequencyPath, true, conf)) {
+			documentFrequency.put(pair.getFirst().get(), pair.getSecond().get());
 	        
-	        }
-	        return documentFrequency;
-	    }
+		}
+		
+		return documentFrequency;
+	}
 	
 	
 	
