@@ -2,7 +2,9 @@
 
 ##TwitterClassifier
 
-Classifier for tweets using a Naive Bayes model trained in Mahout
+Classifier for tweets using a Naive Bayes model trained in Mahout.
+
+This layer is outside of the scope of the project and will be included in the next version.
 
 ###Use
 
@@ -16,7 +18,7 @@ Classifier for tweets using a Naive Bayes model trained in Mahout
 
 ###What it does?
 
-Reads the Sequence file with all the tweets and run a MapReduce in which for each line take the TweetID and the tweet related and classifies it using:
+Reads the Sequence file containing all the tweets and runs a MapReduce in which for each line take the TweetID and the tweet related and classifies it using:
 
 - Naive Bayes model
 - Document Frequency
