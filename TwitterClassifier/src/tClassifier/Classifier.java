@@ -68,6 +68,66 @@ public class Classifier {
 
 	
 	}
+	
+
+	/*
+	 * 		public int getBestCategory
+	 * 
+	 * 		@desc Gets the best category for a vector of scores
+	 * 
+	 * 		@param Vector result. Vector with scores
+	 * 		@return bestCategoryID. Best category for the vector
+	 */	
+	
+	
+	private int getBestCategory(Vector result){
+		
+		
+		 //Iterate through the scores and take the category with the higher.
+	     double bestScore = -Double.MAX_VALUE;
+	     int bestCategoryId = -1;
+	        for(Element element: result) {
+	            int categoryId = element.index();
+	            double score = element.get();
+	            if (score > bestScore) {
+	                bestScore = score;
+	                bestCategoryId = categoryId;
+	            }
+	        }
+	        
+	      return bestCategoryId;
+	}
+	
+	/*
+	 * 		public Vector generateTFIDFVector
+	 * 
+	 * 		@desc Generates a TFIDF vector for the words
+	 * 
+	 * 		@param HasMap words. Words to use for generating the vector
+	 * 		@param int wordCount. Count of the times the word is in the set
+	 * 		@param int documentCount. Count of documents
+	 * 
+	 * 		@return bestCategoryID. Best category for the vector
+	 */	
+	
+	private Vector generateTFIDFVector (HashMap<String, Integer> words, int wordCount, int documentCount){
+		
+		 Vector vector = new RandomAccessSparseVector(10000);
+	      TFIDF tfidf = new TFIDF();
+	      //Create a TF-IDF vector for each tweet
+	        for (Entry<String, Integer> entry: words.entrySet()) {
+	            String word = entry.getKey();
+	            int count = entry.getValue();
+	            Integer wordId = dictionary.get(word);
+	            Long freq = documentFrequency.get(wordId);
+	            double tfIdfValue = tfidf.calculate(count, freq.intValue(), wordCount, documentCount);
+	            vector.setQuick(wordId, tfIdfValue);
+	        }
+	        
+	      return vector;  
+	}
+	
+	
 
 	/*
 	 * 		public int classify
@@ -81,6 +141,7 @@ public class Classifier {
 
 	      int documentCount = documentFrequency.get(-1).intValue();
 	      HashMap<String, Integer> words = new HashMap<String, Integer>();
+	      int bestCategoryID;
 	 
 	      //Create our own TF-IDF vector with the tweet text
 	      
@@ -100,7 +161,6 @@ public class Classifier {
                       words.put(word, 1); 
                   }else{
                       int countWord = words.get(word) + 1; 
-                      words.remove(word);
                       words.put(word, countWord); 
                   }
 
@@ -109,36 +169,17 @@ public class Classifier {
 	      }
 	       
 	 
-	      
-	      Vector vector = new RandomAccessSparseVector(10000);
-	      TFIDF tfidf = new TFIDF();
-	      //Create a TF-IDF vector for each tweet
-	        for (Entry<String, Integer> entry: words.entrySet()) {
-	            String word = entry.getKey();
-	            int count = entry.getValue();
-	            Integer wordId = dictionary.get(word);
-	            Long freq = documentFrequency.get(wordId);
-	            double tfIdfValue = tfidf.calculate(count, freq.intValue(), wordCount, documentCount);
-	            vector.setQuick(wordId, tfIdfValue);
-	        }
+	     //Generate TFIDF vector
+	      Vector vector = generateTFIDFVector(words,wordCount,documentCount);
+	     
 		
-		//Classify the TF-IDF vector created using Mahout model
+		 //Classify the TF-IDF vector created using Mahout model
 		 Vector result = classifier.classifyFull(vector);
-	     
-		 //Iterate through the scores and take the category with the higher.
-	     double bestScore = -Double.MAX_VALUE;
-	     int bestCategoryId = -1;
-	        for(Element element: result) {
-	            int categoryId = element.index();
-	            double score = element.get();
-	            if (score > bestScore) {
-	                bestScore = score;
-	                bestCategoryId = categoryId;
-	            }
-	        }
+		 
+	     //Get the best category for the vector
+		 bestCategoryID =getBestCategory(result);
 	 
-	     return bestCategoryId;
-	     
+	     return bestCategoryID; 
 
 		
 	}

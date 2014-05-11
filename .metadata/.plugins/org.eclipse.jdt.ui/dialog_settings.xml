@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
-	<item value="/Users/ruben/Cursos/Harvard/2014/HW12/Software/hadoop-2.0.0-cdh4.6.0/share/hadoop/mapreduce2" key="org.eclipse.jdt.ui.lastextjar"/>
+	<item value="/Users/ruben/Cursos/Harvard/2014/HW12/Software" key="org.eclipse.jdt.ui.lastextjar"/>
 	<section name="OptionalMessageDialog.hide.">
+		<item value="true" key="RunnableJar.export.ipwarning"/>
 		<item value="true" key="org.eclipse.jdt.ui.typecomment.deprecated"/>
 	</section>
 	<section name="org.eclipse.jdt.internal.ui.packageview.PackageExplorerPart">
@@ -16,12 +17,13 @@
 	<section name="JavaElementSearchActions">
 	</section>
 	<section name="FatJarPackageWizard">
-		<item value="/Users/ruben/Cursos/Harvard/2014/HW12/ProjectMovies/TwitterClassifier2/TwitterClassifier.jar" key="FatJarPackageWizardPage.DESTINATION_PATH_SELECTION"/>
+		<item value="/Users/ruben/Cursos/Harvard/2014/HW12/ProjectMovies/TwitterClassifier/TwitterClassifier.jar" key="FatJarPackageWizardPage.DESTINATION_PATH_SELECTION"/>
 		<item value="TwitterClassifier - TwitterClassifier" key="FatJarPackageWizardPage.LAUNCH_CONFIGURATION_SELECTION_NAME"/>
-		<item value="/Users/ruben/Cursos/Harvard/2014/HW12/ProjectMovies/TwitterClassifier2" key="FatJarPackageWizardPage.ANTSCRIPT_LOCATION"/>
+		<item value="/Users/ruben/Cursos/Harvard/2014/HW12/ProjectMovies/TwitterClassifier2.xml" key="FatJarPackageWizardPage.ANTSCRIPT_LOCATION"/>
 		<item value="false" key="FatJarPackageWizardPage.ANTSCRIPT_SAVE"/>
 		<item value="1" key="FatJarPackageWizardPage.LIBRARY_HANDLING"/>
 		<list key="FatJarPackageWizardPage.DESTINATION_NAMES_ID">
+			<item value="/Users/ruben/Cursos/Harvard/2014/HW12/ProjectMovies/TwitterClassifier/TwitterClassifier.jar"/>
 			<item value="/Users/ruben/Cursos/Harvard/2014/HW12/ProjectMovies/TwitterClassifier2/TwitterClassifier.jar"/>
 		</list>
 		<list key="FatJarPackageWizardPage.ANTSCRIPT_LOCATION_HISTORY">
@@ -29,11 +31,11 @@
 			<item value=".xml"/>
 		</list>
 	</section>
-	<section name="quick_assist_proposal_size">
-	</section>
 	<section name="NewClassWizardPage">
 		<item value="false" key="create_constructor"/>
 		<item value="true" key="create_unimplemented"/>
+	</section>
+	<section name="quick_assist_proposal_size">
 	</section>
 	<section name="NewPackageWizardPage">
 		<item value="false" key="create_package_info_java"/>
