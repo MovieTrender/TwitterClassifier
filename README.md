@@ -18,7 +18,7 @@ This layer is outside of the scope of the project and will be included in the ne
 
 ###What it does?
 
-Reads the Sequence file containing all the tweets and runs a MapReduce in which for each line take the TweetID and the tweet related and classifies it using:
+Reads the Sequence file containing all the tweets and runs a MapReduce in which for each line takes the TweetID and the tweet related and classifies it using:
 
 - Naive Bayes model
 - Document Frequency
