@@ -26,7 +26,7 @@ Reads the Sequence file containing all the tweets and runs a MapReduce in which 
 
 ###References
 
-Parts of the code used in this process were taken from [Chimpler](https://github.com/fredang/mahout-naive-bayes-example2 "Chimpler") and addapted for MovieTrender project.
+Parts of the code used in this process were taken from [Chimpler](https://github.com/fredang/mahout-naive-bayes-example2 "Chimpler") and adapted for MovieTrender project.
 
 
 
