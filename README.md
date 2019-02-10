@@ -1,12 +1,12 @@
 ## Read [Project Documentation](https://github.com/MovieTrender/Documentation "Project Documentation")
 
-##TwitterClassifier
+## TwitterClassifier
 
 Classifier for tweets using a Naive Bayes model trained in Mahout.
 
 This layer is outside of the scope of the project and will be included in the next version.
 
-###Use
+### Use
 
 	hadoop jar TwitterClassifier.jar 
     <<Your Naive Bayes model folder>>
@@ -16,7 +16,7 @@ This layer is outside of the scope of the project and will be included in the ne
     <<Output folder>>
     
 
-###What it does?
+### What it does?
 
 Reads the Sequence file containing all the tweets and runs a MapReduce in which for each line takes the TweetID and the tweet related and classifies it using:
 
@@ -24,7 +24,7 @@ Reads the Sequence file containing all the tweets and runs a MapReduce in which 
 - Document Frequency
 - Dicctionary
 
-###References
+### References
 
 Parts of the code used in this process were taken from [Chimpler](https://github.com/fredang/mahout-naive-bayes-example2 "Chimpler") and adapted for MovieTrender project.
 
